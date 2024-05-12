@@ -39,6 +39,38 @@ router.post('/login', validateBody, validateUsername, async (req, res, next) => 
     }
 })
 
+// update password
+router.put('/update', validateBody, validateEmail, async (req, res, next) => {
+    const { email, newPassword } = req.body
+    try {
+        const hash = bcrypt.hashSync(newPassword, NUM)
+        const updatedUser = await Users.updateUserPassword(email, hash)
+        if (updatedUser) {
+            res.status(200).json({ message: 'Password updated successfully' })
+        } else {
+            next({ status: 404, message: 'User not found' })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+// delete account
+router.delete('/delete', validateBody, validateEmail, async (req, res, next) => {
+    const { email } = req.body
+    try {
+        const deletedUser = await Users.deleteUser(email)
+        if (deletedUser) {
+            res.status(200).json({ message: 'Account deleted successfully' })
+        } else {
+            next({ status: 404, message: 'User not found' })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 function buildToken(user) {
     const payload = {
         subject: user.user_id,

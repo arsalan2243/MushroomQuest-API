@@ -14,7 +14,7 @@ server.use(cors())
 server.use('/api/v1/mushrooms', restrict, mushroomRouter)
 server.use('/api/v1/auth', authRouter)
 server.get("/", (req,res)=> {
-  res.send("hello")
+  res.send("Hello")
 })
 
 server.use((err, req, res, next) => { //eslint-disable-line

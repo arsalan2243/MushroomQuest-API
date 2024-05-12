@@ -18,8 +18,22 @@ async function insertUser(user) {
       .first()
   }
 
-  module.exports = {
-      insertUser,
-      findBy,
-      getById
-  }
+async function updateUserPassword(email, newPasswordHash) {
+    return db('users')
+        .where('email', email)
+        .update({ password: newPasswordHash });
+}
+
+async function deleteUser(email) {
+    return db('users')
+        .where('email', email)
+        .del();
+}
+
+module.exports = {
+    insertUser,
+    findBy,
+    getById,
+    updateUserPassword,
+    deleteUser
+};
