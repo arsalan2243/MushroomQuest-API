@@ -24,9 +24,9 @@ async function updateUserPassword(email, newPasswordHash) {
         .update({ password: newPasswordHash });
 }
 
-async function deleteUser(email) {
+async function deleteUser(username) {
     return db('users')
-        .where('email', email)
+        .where('username', username)
         .del();
 }
 

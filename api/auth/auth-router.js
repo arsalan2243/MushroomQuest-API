@@ -40,10 +40,10 @@ router.post('/login', validateBody, validateUsername, async (req, res, next) => 
 })
 
 // update password
-router.put('/update', validateBody, validateEmail, async (req, res, next) => {
-    const { email, newPassword } = req.body
+router.put('/update', validateEmail, async (req, res, next) => {
+    const { email, password } = req.body
     try {
-        const hash = bcrypt.hashSync(newPassword, NUM)
+        const hash = bcrypt.hashSync(password, NUM)
         const updatedUser = await Users.updateUserPassword(email, hash)
         if (updatedUser) {
             res.status(200).json({ message: 'Password updated successfully' })
@@ -56,10 +56,10 @@ router.put('/update', validateBody, validateEmail, async (req, res, next) => {
 })
 
 // delete account
-router.delete('/delete', validateBody, validateEmail, async (req, res, next) => {
-    const { email } = req.body
+router.delete('/delete/:username', async (req, res, next) => {
+    const { username } = req.params
     try {
-        const deletedUser = await Users.deleteUser(email)
+        const deletedUser = await Users.deleteUser(username)
         if (deletedUser) {
             res.status(200).json({ message: 'Account deleted successfully' })
         } else {
