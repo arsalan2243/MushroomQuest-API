@@ -4,9 +4,11 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('mushrooms').truncate()
-  await knex('mushrooms').insert(
-      [
+  await knex('mushrooms').truncate();
+
+  // Insert new records into the 'mushrooms' table
+  await knex('mushrooms').insert([
+    // Insert mushroom data here
       {
         "name": "Laetiporus gilbertsonii",
         "img": "https://www.mykoweb.com/CAF/photos/large/Laetiporus_gilbertsonii%28fs-05%29.jpg",
